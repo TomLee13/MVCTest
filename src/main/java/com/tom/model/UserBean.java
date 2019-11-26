@@ -1,3 +1,6 @@
+/**
+ * An ADT that is used for new user registration
+ */
 package com.tom.model;
 
 public class UserBean {
@@ -10,7 +13,7 @@ public class UserBean {
 	public UserBean() {}
 	
 	public UserBean(String username, String password, String fistName, String lastName) {
-		super();
+		//super();
 		this.username = username;
 		this.password = password;
 		this.fistName = fistName;
@@ -42,13 +45,11 @@ public class UserBean {
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
+
+	@Override
+	public String toString() {
+		return "UserBean [username=" + username + ", password=" + password + ", fistName=" + fistName + ", lastName="
+				+ lastName + "]";
+	}
 	
-	
-	/*public boolean validate() {
-		if (username.equals("Dian") && password.equals("123")) {
-			return true;
-		} else {
-			return false;
-		}
-	}*/
 }

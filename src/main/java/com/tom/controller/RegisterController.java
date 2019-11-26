@@ -18,14 +18,12 @@ public class RegisterController extends HttpServlet {
 	@Override
 	// Initialize the system. Get the initial registration set.
 	public void init() {
-		registration = Registration.getInstance();
+		registration = new Registration();
 	}
 	
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) 
 			throws IOException, ServletException {
 		res.setContentType("text/html");
-		
-		//String action = req.getParameter("action");
 		String nextView = "";
 		
 		PrintWriter pw = res.getWriter();
@@ -36,28 +34,21 @@ public class RegisterController extends HttpServlet {
 		String fname = req.getParameter("fn");
 		String lname = req.getParameter("ln");
 		
-		//UserBean bean = new UserBean(uname, pwd, fname, lname);
-		//req.setAttribute("bean", bean);
-		
-		boolean duplicate = registration.hasUser(uname);
-		
+		boolean duplicate = registration.hasUser(uname);	
 		if (duplicate) {
 			nextView = "registration.jsp";
 			pw.println("<font color = 'red'>Username existed. Please choose another one.<font>");
 			RequestDispatcher rd = req.getRequestDispatcher(nextView);
 			rd.include(req, res);
-//			nextView = "login-success.jsp";
-//			RequestDispatcher rd = req.getRequestDispatcher(nextView);
-//			rd.forward(req, res);
 		} else {
 			if (pwd.equals(confirmedPwd)) {
 				UserBean bean = new UserBean(uname, pwd, fname, lname);
 				registration.addUser(bean);
 				nextView = "index.jsp";
+				pw.println("<font color = 'blue'>Registered successfully. Please log in.<font>");
 				RequestDispatcher rd = req.getRequestDispatcher(nextView);
 				rd.forward(req, res);
 			} else {
-				res.sendRedirect("LoginController");
 				nextView = "registration.jsp";
 				pw.println("<font color = 'red'>Password needs to be confirmed.<font>");
 				RequestDispatcher rd = req.getRequestDispatcher(nextView);
@@ -66,6 +57,11 @@ public class RegisterController extends HttpServlet {
 			
 		}
 		
+		//test
+		System.out.println("registration: " + registration.hashCode());
+		for (String username : Registration.registered.keySet()) {
+			System.out.println(Registration.registered.get(username).toString());
+		}
 		
 	}
 }

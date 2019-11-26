@@ -3,9 +3,7 @@ package com.tom.model;
 import java.util.*;
 
 public class Registration {
-	private static Registration registration;
-	
-	protected static Map<String, UserBean> registered;
+	public static Map<String, UserBean> registered;
 	
 	public Registration() {
 		registered = new HashMap<>();
@@ -13,13 +11,13 @@ public class Registration {
 		registered.put("Dian", dian);
 	}
 	
-	public static Registration getInstance() {
+	/*public static Registration getInstance() {
 		if (registration == null) {
 			return new Registration();
 		} else {
 			return registration;
 		}
-	}
+	}*/
 	
 	public boolean hasUser(String username) {
 		return registered.containsKey(username);
@@ -37,6 +35,12 @@ public class Registration {
 		String fname = bean.getFistName();
 		String lname = bean.getLastName();
 		registered.put(username, new UserBean(username, pwd, fname, lname));
+		System.out.println("user " + username + " added");
+		// test
+		System.out.println("registration: " + registered.hashCode());
+		for (String uname : registered.keySet()) {
+			System.out.println(registered.get(uname).toString());
+		}
 	}
 	
 }
